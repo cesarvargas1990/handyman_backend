@@ -1,4 +1,6 @@
-FROM openjdk:8-jdk-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+#FROM java:8
+FROM adoptopenjdk/openjdk11:alpine-jre
+LABEL maintainer="cesar.vargas@ias.com.co"
+WORKDIR /myapp
+COPY build/libs/handyman-0.0.1-SNAPSHOT.jar /myapp/my-app.jar
+ENTRYPOINT ["java","-jar","my-app.jar"]
