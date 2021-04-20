@@ -41,14 +41,9 @@ public class ReportService {
 
             Long diff = ((endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60);
 
-            Calendar cl = Calendar.getInstance();
-            cl.setTime(startDate);
 
-            Integer weekNumber = cl.WEEK_OF_YEAR;
-            System.out.println("--"+weekNumber);
-            output.put("weekNumber",weekNumber);
 
-            if (weekNumber == report.weekendNumber) {
+            if ( reports.get(i).weekendNumber == report.weekendNumber) {
 
                 for (int x = 0; x<diff; x++) {
 
@@ -75,45 +70,30 @@ public class ReportService {
                         sundayHoursTotal = sundayHoursTotal + 1;
                     }
 
-                    if (normalHoursTotal >= 48) {
-                        normalHoursTotalExtra = normalHoursTotal - 48;
-                        normalHoursTotal = normalHoursTotal - normalHoursTotalExtra;
-                    }
-
-                    if (nightHoursTotal >= 48) {
-                        nightHoursTotalExtra = nightHoursTotal - 48;
-                        nightHoursTotal = nightHoursTotal - nightHoursTotalExtra;
-                    }
-
-                    if (sundayHoursTotal >= 48) {
-                        sundayHoursTotalExtra = sundayHoursTotal - 48;
-                        sundayHoursTotal = sundayHoursTotal - sundayHoursTotalExtra;
-                    }
 
                 }
 
             }
-            System.out.println(weekNumber);
+
+            if (normalHoursTotal >= 48) {
+                normalHoursTotalExtra = normalHoursTotal - 48;
+                normalHoursTotal = normalHoursTotal - normalHoursTotalExtra;
+            }
+
+            if (nightHoursTotal >= 48) {
+                nightHoursTotalExtra = nightHoursTotal - 48;
+                nightHoursTotal = nightHoursTotal - nightHoursTotalExtra;
+            }
+
+            if (sundayHoursTotal >= 48) {
+                sundayHoursTotalExtra = sundayHoursTotal - 48;
+                sundayHoursTotal = sundayHoursTotal - sundayHoursTotalExtra;
+            }
+
         }
 
 
-
-        System.out.println(normalHoursTotal+" -- "+nightHoursTotal+"--"+sundayHoursTotal);
-        System.out.println(normalHoursTotalExtra+" -- "+nightHoursTotalExtra+"--"+sundayHoursTotalExtra);
-
-
-        output.put("normalHoursTotal", normalHoursTotal);
-        output.put("nightHoursTotal",nightHoursTotal);
-        output.put("sundayHoursTotal",sundayHoursTotal);
-        output.put("normalHoursTotalExtra",normalHoursTotalExtra);
-        output.put("nightHoursTotalExtra",nightHoursTotalExtra);
-        output.put("sundayHoursTotalExtra",sundayHoursTotalExtra);
-
-
         return output;
-
-
-        //return reportRepository.findByEmployeeDocumentNumber(report.employeeDocumentNumber);
     }
 
 }
