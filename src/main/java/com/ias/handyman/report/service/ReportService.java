@@ -93,6 +93,14 @@ public class ReportService {
         }
 
 
+        output.put("normalHoursTotal", normalHoursTotal);
+        output.put("nightHoursTotal",nightHoursTotal);
+        output.put("sundayHoursTotal",sundayHoursTotal);
+
+        output.put("normalHoursTotalExtra",normalHoursTotalExtra);
+        output.put("nightHoursTotalExtra",nightHoursTotalExtra);
+        output.put("sundayHoursTotalExtra",sundayHoursTotalExtra);
+
         return output;
     }
 
