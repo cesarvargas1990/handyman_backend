@@ -1,0 +1,4 @@
+-- constuir imagen
+docker build --build-arg JAR_FILE=build/libs/\*.jar -t handyman-backend .
+-- ejecutar imagen
+docker run --name handyman-backend --publish 8080:8080 -t handyman-backend
