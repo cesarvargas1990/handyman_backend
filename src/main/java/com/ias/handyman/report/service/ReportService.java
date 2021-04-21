@@ -3,7 +3,6 @@ package com.ias.handyman.report.service;
 import com.ias.handyman.report.entity.Report;
 import com.ias.handyman.report.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.CastUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -12,6 +11,8 @@ import java.util.*;
 public class ReportService {
     @Autowired
     ReportRepository reportRepository;
+
+    final Integer numberDays = 48;
 
     public List<Report> consultarTodos() {
         return reportRepository.findAll();
@@ -39,9 +40,7 @@ public class ReportService {
             Date startDate = new Date(serviceStartDate);
             Date endDate = new Date(serviceEndDate);
 
-            Long diff = ((endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60);
-
-
+            Long diff = diffBetweenHours(startDate,endDate);
 
             if ( reports.get(i).weekendNumber == report.weekendNumber) {
 
@@ -52,22 +51,22 @@ public class ReportService {
 
                     if (dti.getHours() >= 7 && dti.getMinutes() >= 0 && dtf.getHours() <= 19 && dtf.getMinutes() <= 59 && dti.getDay() >= 1 && dti.getDay() <= 6) {
 
-                        normalHoursTotal = normalHoursTotal + 1;
+                        normalHoursTotal = incrementHours(normalHoursTotal,1);
                     }
 
                     if ((dti.getHours() >= 20 && dti.getMinutes() >= 0) && (dtf.getDay() >= 1 && dtf.getDay() <= 6)) {
 
-                        nightHoursTotal = nightHoursTotal + 1;
+                        nightHoursTotal = incrementHours(nightHoursTotal,1);
                     }
 
                     if (dti.getDay() > dtf.getDay() && dtf.getHours() <= 6 && dtf.getMinutes() <= 59) {
 
-                        nightHoursTotal = nightHoursTotal + 1;
+                        nightHoursTotal = incrementHours(nightHoursTotal,1);
                     }
 
                     if (dti.getDay() == 0) {
 
-                        sundayHoursTotal = sundayHoursTotal + 1;
+                        sundayHoursTotal = incrementHours(sundayHoursTotal,1);
                     }
 
 
@@ -75,19 +74,19 @@ public class ReportService {
 
             }
 
-            if (normalHoursTotal >= 48) {
-                normalHoursTotalExtra = normalHoursTotal - 48;
-                normalHoursTotal = normalHoursTotal - normalHoursTotalExtra;
+            if (normalHoursTotal >= numberDays) {
+                normalHoursTotalExtra = subtactNumberDays(normalHoursTotal);
+                normalHoursTotal = subtractTwoHoursTotal(normalHoursTotal,normalHoursTotalExtra);
             }
 
-            if (nightHoursTotal >= 48) {
-                nightHoursTotalExtra = nightHoursTotal - 48;
-                nightHoursTotal = nightHoursTotal - nightHoursTotalExtra;
+            if (nightHoursTotal >= numberDays) {
+                nightHoursTotalExtra = subtactNumberDays(nightHoursTotal);
+                nightHoursTotal = subtractTwoHoursTotal(nightHoursTotal,nightHoursTotalExtra);
             }
 
-            if (sundayHoursTotal >= 48) {
-                sundayHoursTotalExtra = sundayHoursTotal - 48;
-                sundayHoursTotal = sundayHoursTotal - sundayHoursTotalExtra;
+            if (sundayHoursTotal >= numberDays) {
+                sundayHoursTotalExtra = subtactNumberDays(sundayHoursTotal);
+                sundayHoursTotal = subtractTwoHoursTotal(sundayHoursTotal,sundayHoursTotalExtra);
             }
 
         }
@@ -102,6 +101,22 @@ public class ReportService {
         output.put("sundayHoursTotalExtra",sundayHoursTotalExtra);
 
         return output;
+    }
+
+    public Integer subtactNumberDays(Integer hours){
+        return hours-numberDays;
+    }
+
+    public Integer subtractTwoHoursTotal(Integer firstHour, Integer secondHour) {
+        return firstHour-secondHour;
+    }
+
+    public Long diffBetweenHours (Date startDate, Date endDate) {
+        return (endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60;
+    }
+
+    public Integer incrementHours (Integer hours, Integer incrementBy) {
+        return hours + incrementBy;
     }
 
 }
