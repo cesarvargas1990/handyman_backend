@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.ias.handyman.report.service.ReportServiceTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2021-04-28T02:17:52" hostname="Cesars-MacBook-Air.local" time="0.407">
+  <properties/>
+  <testcase name="testDiffBetweenHours()" classname="com.ias.handyman.report.service.ReportServiceTest" time="0.397"/>
+  <testcase name="testSubtactNumberDays()" classname="com.ias.handyman.report.service.ReportServiceTest" time="0.002"/>
+  <testcase name="testSubtractTwoHoursTotal()" classname="com.ias.handyman.report.service.ReportServiceTest" time="0.002"/>
+  <testcase name="testIncrementHours()" classname="com.ias.handyman.report.service.ReportServiceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
